@@ -11,18 +11,16 @@ impl Solution {
     // dp[i] = (j=[1..i-1])max{dp[j] - nums[j] + nums[j] - fee} 
     pub fn max_profit(prices: Vec<i32>, fee: i32) -> i32{
         let len = prices.len();
-        let mut dp = vec![0; len + 1];
+        let mut dp = vec![vec![0, 0]; len + 1];
         // dp[2] = 
+        dp[1][1] = -prices[0] - fee; 
         for i in 1..len{
             let dp_i = i + 1;
-            dp[dp_i] = dp[dp_i].max(dp[dp_i-1]); 
-            for j in 0..i{ // 在j天买 在i天卖 
-                let dp_j = j + 1;
-                dp[dp_i] = dp[dp_i].max(dp[dp_j] - prices[j] + prices[i] - fee);
-            } 
+            dp[dp_i][0] = dp[dp_i-1][0].max(dp[dp_i-1][1] + prices[i]); 
+            dp[dp_i][1] = dp[dp_i-1][1].max(dp[dp_i-1][0] - prices[i] - fee); 
             
         }
-        dp[len]
+        dp[len][0]
     }
 }
 // @lc code=end
