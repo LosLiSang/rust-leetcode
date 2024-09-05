@@ -62,46 +62,9 @@
  */
 
 // @lc code=start
-
-
 impl Solution {
-    /// dp[i][j] 表示p[0..i] 是否 能匹配 s[0..j] 
-    pub fn is_match(s: String, p: String) -> bool {
-        let slen = s.len();
-        let plen = p.len();
-        // let mut i = 0;
-        // let mut j = 0;
-        let mut dp = vec![vec![false; slen + 1]; plen + 1];
-        dp[0][0] = true;
-        let get_char = |str: &String, idx: usize| -> char {
-            if idx == 0 {
-                return '0';
-            }
-            str.chars().nth(idx - 1).unwrap()
-        };
-        let s_char_at = |idx| get_char(&s, idx);
-        let p_char_at = |idx| get_char(&p, idx);
-        dp[0][0] = true;
-        for i in 1..plen+1 {
-            if p_char_at(i) == '*' {
-                dp[i][0] |= dp[i - 2][0];
-            }
-        }
-        for i in 1..plen + 1 {
-            for j in 1..slen + 1 {
-                if p_char_at(i) == s_char_at(j) || p_char_at(i) == '.' {
-                    dp[i][j] |= dp[i - 1][j - 1];
-                } else if p_char_at(i) == '*' {
-                    dp[i][j] |= p_char_at(i - 1) == s_char_at(j) && dp[i - 1][j - 1];
-                    dp[i][j] |= p_char_at(i - 1) == s_char_at(j) && dp[i][j - 1];
-                    dp[i][j] |= p_char_at(i - 1) == '.' && dp[i - 1][j - 1]; // 匹配多次
-                    dp[i][j] |= p_char_at(i - 1) == '.' && dp[i][j - 1]; // 匹配1次
-                    dp[i][j] |= dp[i - 2][j]; // 匹配0次
-                }
-            }
-        }
-        dp[plen][slen]
+    pub fn length_of_last_word(s: String) -> i32 {
+
     }
 }
 // @lc code=end
-

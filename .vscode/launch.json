@@ -5,60 +5,43 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Debug execute program",
             "type": "lldb",
             "request": "launch",
-            "name": "Debug unit tests in library 'leetcode'",
-            "cargo": {
-                "args": [
-                    "test",
-                    "--no-run",
-                    "--lib",
-                    "--package=leetcode"
-                ],
-                "filter": {
-                    "name": "leetcode",
-                    "kind": "lib"
-                }
-            },
-            "args": [],
-            "cwd": "${workspaceFolder}"
+            "program": "${workspaceRoot}/target/debug/${workspaceRootFolderName}",
+            "args": [
+                "target/release/program",
+                "corpus/"
+            ],
+            "terminal": "external",
+            "preLaunchTask": "rust: cargo build"
         },
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug executable 'leetcode'",
+            "name": "Debug executable 'forkserver_simple'",
             "cargo": {
                 "args": [
                     "build",
-                    "--bin=leetcode",
-                    "--package=leetcode"
+                    "--bin=forkserver_simple",
+                    "--package=forkserver_simple"
                 ],
                 "filter": {
-                    "name": "leetcode",
+                    "name": "forkserver_simple",
                     "kind": "bin"
                 }
             },
-            "args": [],
-            "cwd": "${workspaceFolder}"
+            "args": [
+                "./target/release/program",
+                "./corpus/",
+                "-t",
+                "1000",
+                "-d",
+            ],
+            "env": {
+                "AFL_DEBUG": "1",
+            },
+            "cwd": "${workspaceFolder}/fuzzers/forkserver_simple"
         },
-        {
-            "type": "lldb",
-            "request": "launch",
-            "name": "Debug unit tests in executable 'leetcode'",
-            "cargo": {
-                "args": [
-                    "test",
-                    "--no-run",
-                    "--bin=leetcode",
-                    "--package=leetcode"
-                ],
-                "filter": {
-                    "name": "leetcode",
-                    "kind": "bin"
-                }
-            },
-            "args": [],
-            "cwd": "${workspaceFolder}"
-        }
     ]
 }

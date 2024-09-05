@@ -1,0 +1,1 @@
+python .\bin\sync.py %1
